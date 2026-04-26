@@ -376,6 +376,18 @@ void EngineeringScreen::onUpdate()
                 my_spaceship->commandSetSystemCoolantRequest(static_cast<ESystem>(n), set_value);
                 set_coolant_active[n] = set_value != 0.0f; //Make sure the next update is send, even if it is back to zero.
             }
+
+            // Per-system coolant increase/decrease controls
+            if (keys.engineering_increase_coolant_for_system[n].getDown())
+            {
+                float new_coolant = std::min(my_spaceship->max_coolant_per_system, my_spaceship->systems[n].coolant_request + 1.0f);
+                my_spaceship->commandSetSystemCoolantRequest(static_cast<ESystem>(n), new_coolant);
+            }
+            if (keys.engineering_decrease_coolant_for_system[n].getDown())
+            {
+                float new_coolant = std::max(0.0f, my_spaceship->systems[n].coolant_request - 1.0f);
+                my_spaceship->commandSetSystemCoolantRequest(static_cast<ESystem>(n), new_coolant);
+            }
         }
 
         if (selected_system != SYS_None)

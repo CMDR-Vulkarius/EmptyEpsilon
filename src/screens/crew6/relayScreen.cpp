@@ -306,3 +306,25 @@ void RelayScreen::onDraw(sp::RenderTarget& renderer)
     else
         delete_waypoint_button->disable();
 }
+
+void RelayScreen::onUpdate()
+{
+    // Allow relay to control main screen view settings
+    if (my_spaceship && isVisible())
+    {
+        if (keys.mainscreen_forward.getDown())
+            my_spaceship->commandMainScreenSetting(MSS_Front);
+        if (keys.mainscreen_left.getDown())
+            my_spaceship->commandMainScreenSetting(MSS_Left);
+        if (keys.mainscreen_right.getDown())
+            my_spaceship->commandMainScreenSetting(MSS_Right);
+        if (keys.mainscreen_back.getDown())
+            my_spaceship->commandMainScreenSetting(MSS_Back);
+        if (keys.mainscreen_target.getDown())
+            my_spaceship->commandMainScreenSetting(MSS_Target);
+        if (keys.mainscreen_tactical_radar.getDown() && gameGlobalInfo->allow_main_screen_tactical_radar)
+            my_spaceship->commandMainScreenSetting(MSS_Tactical);
+        if (keys.mainscreen_long_range_radar.getDown() && gameGlobalInfo->allow_main_screen_long_range_radar)
+            my_spaceship->commandMainScreenSetting(MSS_LongRange);
+    }
+}

@@ -16,7 +16,7 @@ GuiViewportMainScreen::GuiViewportMainScreen(GuiContainer* owner, string id)
     if (flags & flag_spacedust)
       showSpacedust();
 
-    first_person = PreferencesManager::get("first_person") == "1";
+    first_person = PreferencesManager::get("first_person", "1") == "1";
 }
 
 void GuiViewportMainScreen::onDraw(sp::RenderTarget& renderer)

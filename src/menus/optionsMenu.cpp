@@ -263,6 +263,12 @@ void OptionsMenu::setupGraphicsOptions()
     // Override overlay label.
     graphics_fov_overlay_label = new GuiLabel(graphics_fov_slider, "GRAPHICS_FOV_SLIDER_LABEL", tr("FoV: {fov}").format({ {"fov", string(initial_fov, 0)} }), 30);
     graphics_fov_overlay_label->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);
+
+    // First person view toggle.
+    (new GuiToggleButton(graphics_page, "FIRST_PERSON_TOGGLE", tr("Main Screen First Person View"), [](bool value)
+    {
+        PreferencesManager::set("first_person", value ? "1" : "0");
+    }))->setValue(PreferencesManager::get("first_person", "1") == "1")->setSize(GuiElement::GuiSizeMax, 50);
 }
 
 void OptionsMenu::setupAudioOptions()
