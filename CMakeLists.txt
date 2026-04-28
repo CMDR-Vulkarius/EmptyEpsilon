@@ -272,6 +272,7 @@ set(MAIN_SOURCES
     src/screens/extra/databaseScreen.cpp
     src/screens/extra/commsScreen.cpp
     src/screens/extra/shipLogScreen.cpp
+    src/screens/extra/repairsScreen.cpp
     src/screens/gm/gameMasterScreen.cpp
     src/screens/gm/objectCreationView.cpp
     src/screens/gm/globalMessageEntryView.cpp
@@ -304,6 +305,11 @@ set(MAIN_SOURCES
     src/screenComponents/snapSlider.cpp
     src/screenComponents/indicatorOverlays.cpp
     src/screenComponents/openCommsButton.cpp
+    src/screenComponents/pipeRouting.cpp
+    src/screenComponents/sequenceCalibration.cpp
+    src/screenComponents/chemistryRepair.cpp
+    src/screenComponents/shieldEmitterCalibration.cpp
+    src/screenComponents/targetingComputerCalibration.cpp
     src/screenComponents/combatManeuver.cpp
     src/screenComponents/rotatingModelView.cpp
     src/screenComponents/shipDestroyedPopup.cpp

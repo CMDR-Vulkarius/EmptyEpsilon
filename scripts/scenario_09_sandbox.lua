@@ -1,0 +1,44 @@
+-- Name: Sandbox
+-- Description: GM Controlled missions
+--- Regions defined: Icarus, Kentar, Astron, Lafrina, Teresh, Bask
+--- Version 5
+--- Latest version: https://github.com/Xansta/EEScenarios
+--- Wiki: https://github.com/Xansta/EEScenarios/wiki/Sandbox
+--- USN Discord: https://discord.gg/PntGG3a 
+--- USN uses this sandbox Saturdays at 1600 UTC. 
+--- Newcomers are welcome to join us. Please post feedback about the sandbox on the EEScenarios github repository.
+-- Type: Development
+-- Author: Xansta and Starry
+-- Setting[Start Region]: Determine the start region for the session
+-- Start Region[Icarus|Default]: Large station normally with 6 defense platforms and small minefields
+-- Start Region[Kentar]: Large station normally with 3 defense platforms
+-- Start Region[Astron]: Small station no defenses on the edge of a huge nebula field where Ghosts reside
+-- Start Region[Lafrina]: Small station no defenses near primarily Arlenian occupied space
+-- Start Region[Teresh]: Large station normally with 5 defense platforms and small minefields
+-- Start Region[Bask]: Medium station no defenses. Multiple factions, intense star, Magnasol
+-- Start Region[Staunch]: Small station, multiple factions actively fighting
+-- Start Region[None] : Skeleton only, mostly for development
+-- Setting[Warning]: Configures whether stations and ships in a region warn the players about enemies
+-- Warning[On With Ship Type|Default]: Players warned about enemies observed. Warning includes ship type
+-- Warning[On Without Ship Type]: Players warned about enemies observed. Warning does not include ship type
+-- Warning[Off]: Players not warned about enemies observed
+-- Setting[Warn Proximity]: Configures how close the enemies get before a warning is sent
+-- Warn Proximity[20|default]: Warning sent when enemies are within twenty units
+-- Warn Proximity[30]: Warning sent when enemies are within thirty units
+-- Warn Proximity[5]: Warning sent when enemies are within five units
+-- Warn Proximity[10]: Warning sent when enemies are within ten units
+-- Setting[Jump Corridor]: Is a jump corridor available between primary region stations when players dock. Automates region transition
+-- Jump Corridor[Off|Default]: No jump corridor between primary region stations
+-- Jump Corridor[On]: Jump corridor available between primary region stations
+-- Setting[Special Factor]: Base chance of special ability being added to spawned enemy: ship strength * special factor = the chance in 1000 that a special will be added
+-- Special Factor[0]: No specials
+-- Special Factor[1|Default]: Special factor one (default)
+-- Special Factor[2]: Special factor two
+-- Special Factor[3]: Special factor three
+-- Special Factor[5]: Special factor five
+-- Special Factor[8]: Special factor eight
+-- Setting[Mirror]: Should we start in the mirror universe?
+-- Mirror[No|Default]: We are in the normal universe
+-- Mirror[Yes]: We are in the mirror universe
+
+require("sandbox/main.lua")
