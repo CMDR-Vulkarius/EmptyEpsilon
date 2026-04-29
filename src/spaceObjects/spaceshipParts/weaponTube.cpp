@@ -72,6 +72,7 @@ void WeaponTube::startLoad(EMissileWeapons type)
     if (parent->weapon_storage[type] <= 0)
         return;
 
+    fired = 0;
     state = WTS_Loading;
     delay = load_time;
     parent->forceMemberReplicationUpdate(&delay);
@@ -104,6 +105,7 @@ void WeaponTube::fire(float target_angle)
         delay = 0.0;
     }else{
         spawnProjectile(target_angle);
+        fired += 1;
         state = WTS_Empty;
         type_loaded = MW_None;
     }
@@ -234,6 +236,7 @@ void WeaponTube::update(float delta)
             if (game_server)
             {
                 spawnProjectile(0);
+                fired += 1;
 
                 fire_count -= 1;
                 if (fire_count > 0)

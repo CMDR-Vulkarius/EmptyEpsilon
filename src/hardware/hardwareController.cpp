@@ -341,6 +341,17 @@ HardwareMappingEffect* HardwareController::createEffect(std::unordered_map<strin
     return nullptr;
 }
 
+namespace
+{
+    template <typename Numeric, typename Iterator, typename Functor>
+    Numeric sum(Iterator first, Iterator last, Functor func)
+    {
+        Numeric acc = 0;
+        while (first != last) acc += func(*(first++));
+        return acc;
+    }
+}
+
 #define SHIP_VARIABLE(name, formula) if (variable_name == name) { if (ship) { value = (formula); return true; } return false; }
 bool HardwareController::getVariableValue(string variable_name, float& value)
 {
@@ -391,7 +402,9 @@ bool HardwareController::getVariableValue(string variable_name, float& value)
         SHIP_VARIABLE("TubeLoading" + string(n), ship->weapon_tube[n].isLoading() ? 1.0f : 0.0f);
         SHIP_VARIABLE("TubeUnloading" + string(n), ship->weapon_tube[n].isUnloading() ? 1.0f : 0.0f);
         SHIP_VARIABLE("TubeFiring" + string(n), ship->weapon_tube[n].isFiring() ? 1.0f : 0.0f);
+        SHIP_VARIABLE("TubeFired" + string(n), static_cast<float>(ship->weapon_tube[n].fired));
     }
+    SHIP_VARIABLE("TubeFired", static_cast<float>(sum<int>(ship->weapon_tube, ship->weapon_tube+ship->weapon_tube_count, [](WeaponTube & tube){return tube.fired;})));
     for(int n=0; n<SYS_COUNT; n++)
     {
         SHIP_VARIABLE(getSystemName(ESystem(n)).replace(" ", "") + "Health", ship->systems[n].health);
@@ -400,6 +413,8 @@ bool HardwareController::getVariableValue(string variable_name, float& value)
         SHIP_VARIABLE(getSystemName(ESystem(n)).replace(" ", "") + "Coolant", ship->systems[n].coolant_level);
         SHIP_VARIABLE(getSystemName(ESystem(n)).replace(" ", "") + "Hacked", ship->systems[n].hacked_level);
     }
+    
+    SHIP_VARIABLE("ScanTarget", ship->scanning_target ? 1.0f : 0.0f);
 
     LOG(WARNING) << "Unknown variable: " << variable_name;
     value = 0.0;

@@ -87,7 +87,9 @@ private:
     EMissileSizes size;
     EWeaponTubeState state;
     float delay;
-    int fire_count;
+    int fire_count = 0;
+public:
+    int fired = 0;
 };
 
 #endif//WEAPON_TUBE_H
