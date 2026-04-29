@@ -465,6 +465,10 @@ void ShipSelectionScreen::update(float delta)
 CrewPositionSelection::CrewPositionSelection(GuiContainer* owner, string id, int _window_index, std::function<void()> on_cancel, std::function<void()> on_ready)
 : GuiPanel(owner, id), window_index(_window_index)
 {
+    // Initialize crew_position_button array to nullptr
+    for(int i = 0; i < max_crew_positions; i++)
+        crew_position_button[i] = nullptr;
+    
     setSize(GuiElement::GuiSizeMax, 800);
     setPosition(0, 0, sp::Alignment::Center);
     setMargins(50);
@@ -492,14 +496,17 @@ CrewPositionSelection::CrewPositionSelection(GuiContainer* owner, string id, int
     layout->setMargins(25, 50, 25, 0)->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax)->setAttribute("layout", "vertical");
 
     auto create_crew_position_button = [this](GuiElement* layout, int n) {
+        LOG(INFO, "Creating crew position button for: ", getCrewPositionName(ECrewPosition(n)), " (index ", n, ")");
         auto button = new GuiToggleButton(layout, "", getCrewPositionName(ECrewPosition(n)), [this, n](bool value){
+            LOG(INFO, "Crew position button clicked: ", getCrewPositionName(ECrewPosition(n)), " (", n, ") = ", value);
             my_player_info->commandSetCrewPosition(window_index, ECrewPosition(n), value);
             unselectSingleOptions();
         });
-        button->setSize(GuiElement::GuiSizeMax, 50);
+        button->setSize(GuiElement::GuiSizeMax, 45);
         button->setIcon(getCrewPositionIcon(ECrewPosition(n)));
         button->setValue(my_player_info->crew_position[n] & (1 << window_index));
         crew_position_button[n] = button;
+        LOG(INFO, "  -> Registered at crew_position_button[", n, "]");
         return button;
     };
     for(int n=0; n<=int(relayOfficer); n++)
@@ -517,7 +524,7 @@ CrewPositionSelection::CrewPositionSelection(GuiContainer* owner, string id, int
 
     // 3d views panel
     auto space_screens_panel= new GuiPanel(center_container,"");
-    space_screens_panel->setSize(GuiElement::GuiSizeMax, 215)->setMargins(0, 0, 0, 25);
+    space_screens_panel->setSize(GuiElement::GuiSizeMax, 215)->setMargins(0, 0, 0, 10);
     (new GuiLabel(space_screens_panel, "CREW_POSITION_SELECT_LABEL", tr("3D screens"), 30))->addBackground()->setSize(GuiElement::GuiSizeMax, 50)->setMargins(15, 0);
     layout = new GuiElement(space_screens_panel, "");
     layout->setMargins(25, 50, 25, 0)->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax)->setAttribute("layout", "vertical");
@@ -566,9 +573,10 @@ CrewPositionSelection::CrewPositionSelection(GuiContainer* owner, string id, int
 
     // Alternative options panel
     auto alternative_options_panel = new GuiPanel(center_container, "");
-    alternative_options_panel->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax);;
+    alternative_options_panel->setSize(GuiElement::GuiSizeMax, 550);
     (new GuiLabel(alternative_options_panel, "CREW_POSITION_SELECT_LABEL", tr("Alternative options"), 30))->addBackground()->setSize(GuiElement::GuiSizeMax, 50)->setMargins(15, 0);
     layout = new GuiElement(alternative_options_panel, "");
+    layout->setMargins(25, 50, 25, 0)->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax)->setAttribute("layout", "vertical");
 
     // Main screen controls button
     main_screen_controls_button = new GuiToggleButton(layout, "MAIN_SCREEN_CONTROLS_ENABLE", tr("Main screen controls"), [this](bool value) {
@@ -576,7 +584,6 @@ CrewPositionSelection::CrewPositionSelection(GuiContainer* owner, string id, int
     });
     main_screen_controls_button->setValue(my_player_info->main_screen_control)->setSize(GuiElement::GuiSizeMax, 50);
 
-    layout->setMargins(25, 50, 25, 0)->setSize(GuiElement::GuiSizeMax, GuiElement::GuiSizeMax)->setAttribute("layout", "vertical");
     for(int n=int(singlePilot) + 1; n<int(max_crew_positions); n++)
     create_crew_position_button(layout, n);
     // Info text panel
@@ -597,6 +604,8 @@ void CrewPositionSelection::onUpdate()
     string crew_text = "";
     for(int n = 0; n < max_crew_positions; n++)
     {
+        if (!crew_position_button[n]) continue; // Skip if button wasn't created
+        
         string button_text = getCrewPositionName(ECrewPosition(n));
         if (my_spaceship)
         {
@@ -631,6 +640,7 @@ void CrewPositionSelection::disableAllExcept(GuiToggleButton* button)
 {
     for(int n = 0; n < max_crew_positions; n++)
     {
+        if (!crew_position_button[n]) continue; // Skip if button wasn't created
         if (crew_position_button[n] != button)
         {
             crew_position_button[n]->setValue(false);

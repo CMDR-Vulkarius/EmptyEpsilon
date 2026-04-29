@@ -124,6 +124,8 @@ public:
     sp::io::Keybinding engineering_increase_coolant;
     sp::io::Keybinding engineering_decrease_coolant;
     sp::io::Keybinding engineering_set_coolant;
+    std::array<sp::io::Keybinding, SYS_COUNT> engineering_increase_coolant_for_system;
+    std::array<sp::io::Keybinding, SYS_COUNT> engineering_decrease_coolant_for_system;
     sp::io::Keybinding engineering_next_repair_crew;
     sp::io::Keybinding engineering_repair_crew_up;
     sp::io::Keybinding engineering_repair_crew_down;

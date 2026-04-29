@@ -65,6 +65,7 @@ public:
     float coolant_rate_per_second{};
     float heat_rate_per_second{};
     float power_rate_per_second{};
+    float repair_boost_end_time = 0.0f; // Time when repair boost expires
 
     float getHeatingDelta() const
     {

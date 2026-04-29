@@ -473,6 +473,7 @@ static const int16_t CMD_SEND_TEXT_COMM = 0x0014;
 static const int16_t CMD_SEND_TEXT_COMM_PLAYER = 0x0015;
 static const int16_t CMD_ANSWER_COMM_HAIL = 0x0016;
 static const int16_t CMD_SET_AUTO_REPAIR = 0x0017;
+static const int16_t CMD_BOOST_SYSTEM_REPAIR = 0x0040;
 static const int16_t CMD_SET_BEAM_FREQUENCY = 0x0018;
 static const int16_t CMD_SET_BEAM_SYSTEM_TARGET = 0x0019;
 static const int16_t CMD_SET_SHIELD_FREQUENCY = 0x001A;
@@ -1657,6 +1658,16 @@ void PlayerSpaceship::onReceiveClientCommand(int32_t client_id, sp::io::DataBuff
     case CMD_SET_AUTO_REPAIR:
         packet >> auto_repair_enabled;
         break;
+    case CMD_BOOST_SYSTEM_REPAIR:
+        {
+            ESystem system;
+            packet >> system;
+            if (hasSystem(system)) {
+                systems[system].repair_boost_end_time = 60.0f;
+                LOG(INFO) << "Repair boost activated for " << getSystemName(system) << " for 60 seconds";
+            }
+        }
+        break;
     case CMD_SET_BEAM_FREQUENCY:
         {
             int32_t new_frequency;
@@ -2051,6 +2062,13 @@ void PlayerSpaceship::commandSetAutoRepair(bool enabled)
 {
     sp::io::DataBuffer packet;
     packet << CMD_SET_AUTO_REPAIR << enabled;
+    sendClientCommand(packet);
+}
+
+void PlayerSpaceship::commandBoostSystemRepair(ESystem system)
+{
+    sp::io::DataBuffer packet;
+    packet << CMD_BOOST_SYSTEM_REPAIR << system;
     sendClientCommand(packet);
 }
 

@@ -1210,6 +1210,17 @@ void SpaceShip::update(float delta)
     {
         systems[n].hacked_level = std::max(0.0f, systems[n].hacked_level - delta / unhack_time);
         systems[n].health = std::min(systems[n].health,systems[n].health_max);
+        
+        // Apply repair boost if active
+        if (systems[n].repair_boost_end_time > 0.0f)
+        {
+            systems[n].repair_boost_end_time -= delta;
+            if (systems[n].health < systems[n].health_max)
+            {
+                // Boosted repair: 0.015 health per second (takes ~133 seconds to fully repair from -1.0 to 1.0)
+                systems[n].health = std::min(systems[n].health_max, systems[n].health + delta * 0.015f);
+            }
+        }
     }
 
     model_info.engine_scale = std::min(1.0f, (float) std::max(fabs(getAngularVelocity() / turn_speed), fabs(current_impulse)));

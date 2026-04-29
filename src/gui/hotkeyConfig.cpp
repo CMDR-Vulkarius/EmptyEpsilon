@@ -257,6 +257,28 @@ Keys::Keys() :
     engineering_increase_coolant("ENGINEERING_COOLANT_INCREASE", "="),
     engineering_decrease_coolant("ENGINEERING_COOLANT_DECREASE", "-"),
     engineering_set_coolant("ENGINEERING_COOLANT_SET"),
+    engineering_increase_coolant_for_system{{
+        {"ENGINEERING_INCREASE_SYSTEM_COOLANT_REACTOR"},
+        {"ENGINEERING_INCREASE_SYSTEM_COOLANT_BEAMWEAPONS"},
+        {"ENGINEERING_INCREASE_SYSTEM_COOLANT_MISSILESYSTEM"},
+        {"ENGINEERING_INCREASE_SYSTEM_COOLANT_MANEUVER"},
+        {"ENGINEERING_INCREASE_SYSTEM_COOLANT_IMPULSE"},
+        {"ENGINEERING_INCREASE_SYSTEM_COOLANT_WARP"},
+        {"ENGINEERING_INCREASE_SYSTEM_COOLANT_JUMPDRIVE"},
+        {"ENGINEERING_INCREASE_SYSTEM_COOLANT_FRONTSHIELD"},
+        {"ENGINEERING_INCREASE_SYSTEM_COOLANT_REARSHIELD"}
+    }},
+    engineering_decrease_coolant_for_system{{
+        {"ENGINEERING_DECREASE_SYSTEM_COOLANT_REACTOR"},
+        {"ENGINEERING_DECREASE_SYSTEM_COOLANT_BEAMWEAPONS"},
+        {"ENGINEERING_DECREASE_SYSTEM_COOLANT_MISSILESYSTEM"},
+        {"ENGINEERING_DECREASE_SYSTEM_COOLANT_MANEUVER"},
+        {"ENGINEERING_DECREASE_SYSTEM_COOLANT_IMPULSE"},
+        {"ENGINEERING_DECREASE_SYSTEM_COOLANT_WARP"},
+        {"ENGINEERING_DECREASE_SYSTEM_COOLANT_JUMPDRIVE"},
+        {"ENGINEERING_DECREASE_SYSTEM_COOLANT_FRONTSHIELD"},
+        {"ENGINEERING_DECREASE_SYSTEM_COOLANT_REARSHIELD"}
+    }},
     engineering_next_repair_crew("ENGINEERING_REPAIR_CREW_NEXT", "C"),
     engineering_repair_crew_up("ENGINEERING_REPAIR_CREW_UP", "Up"),
     engineering_repair_crew_down("ENGINEERING_REPAIR_CREW_DOWN", "Down"),
@@ -427,6 +449,24 @@ void Keys::init()
     engineering_increase_coolant.setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Increase system coolant"));
     engineering_decrease_coolant.setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Decrease system coolant"));
     engineering_set_coolant.setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Set system coolant (joystick)"));
+    engineering_increase_coolant_for_system[SYS_Reactor].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Increase Reactor coolant"));
+    engineering_increase_coolant_for_system[SYS_BeamWeapons].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Increase Beam Weapons coolant"));
+    engineering_increase_coolant_for_system[SYS_MissileSystem].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Increase Missile System coolant"));
+    engineering_increase_coolant_for_system[SYS_Maneuver].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Increase Maneuver coolant"));
+    engineering_increase_coolant_for_system[SYS_Impulse].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Increase Impulse coolant"));
+    engineering_increase_coolant_for_system[SYS_Warp].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Increase Warp coolant"));
+    engineering_increase_coolant_for_system[SYS_JumpDrive].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Increase Jump Drive coolant"));
+    engineering_increase_coolant_for_system[SYS_FrontShield].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Increase Front Shield coolant"));
+    engineering_increase_coolant_for_system[SYS_RearShield].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Increase Rear Shield coolant"));
+    engineering_decrease_coolant_for_system[SYS_Reactor].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Decrease Reactor coolant"));
+    engineering_decrease_coolant_for_system[SYS_BeamWeapons].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Decrease Beam Weapons coolant"));
+    engineering_decrease_coolant_for_system[SYS_MissileSystem].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Decrease Missile System coolant"));
+    engineering_decrease_coolant_for_system[SYS_Maneuver].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Decrease Maneuver coolant"));
+    engineering_decrease_coolant_for_system[SYS_Impulse].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Decrease Impulse coolant"));
+    engineering_decrease_coolant_for_system[SYS_Warp].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Decrease Warp coolant"));
+    engineering_decrease_coolant_for_system[SYS_JumpDrive].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Decrease Jump Drive coolant"));
+    engineering_decrease_coolant_for_system[SYS_FrontShield].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Decrease Front Shield coolant"));
+    engineering_decrease_coolant_for_system[SYS_RearShield].setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Decrease Rear Shield coolant"));
     engineering_next_repair_crew.setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Next repair crew"));
     engineering_repair_crew_up.setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Crew move up"));
     engineering_repair_crew_down.setLabel(tr("hotkey_menu", "Engineering"), tr("hotkey_Engineering", "Crew move down"));
